@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal Website</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card: #f2f2f2;
+      --accent: #4f46e5;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --text: #e5e7eb;
+      --card: #1e293b;
+    }
+
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { margin: 0; background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s; }
+    header { padding: 1rem; display: flex; justify-content: space-between; align-items: center; background: var(--card); position: sticky; top: 0; z-index: 10; }
+    nav ul { list-style: none; display: flex; gap: 1rem; margin: 0; padding: 0; }
+    nav a { text-decoration: none; color: var(--text); font-weight: bold; cursor: pointer; }
+    .controls button, select { margin-left: 0.5rem; padding: 0.4rem 0.6rem; cursor: pointer; }
+    main { padding: 1rem; max-width: 900px; margin: auto; }
+    section { display: none; background: var(--card); padding: 1rem; border-radius: 12px; margin-bottom: 1rem; }
+    section.active { display: block; }
+    h1, h2, h3 { margin-top: 0; }
+    form { display: flex; flex-direction: column; gap: 0.6rem; }
+    input, textarea { padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; }
+    button.submit { background: var(--accent); color: white; border: none; padding: 0.6rem; border-radius: 6px; }
+    footer { text-align: center; padding: 1rem; font-size: 0.9rem; opacity: 0.7; }
+    @media (max-width: 600px) { header { flex-direction: column; gap: 0.5rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <strong id="title">My Personal Site</strong>
+    <nav>
+      <ul>
+        <li><a onclick="showSection('about-us')" id="navAbout">About</a></li>
+        <li><a onclick="showSection('videos')" id="navVideos">Videos</a></li>
+        <li><a onclick="showSection('projects')" id="navProjects">Projects</a></li>
+        <li><a onclick="showSection('contact')" id="navContact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="controls">
+      <select id="languageSwitcher">
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="he">עברית</option>
+        <option value="yi">ייִדיש</option>
+      </select>
+      <button onclick="toggleTheme()">🌙 / ☀️</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="about-us" class="active">
+      <h2 id="aboutUsTitle">About Us</h2>
+      <p id="aboutUsText">We are dedicated to preserving and teaching the Yiddish language and culture.</p>
+      <h3 id="movementTitle">Our Movement</h3>
+      <div id="movementText"></div>
+    </section>
+
+    <section id="videos">
+      <h2 id="videosTitle">Learning Yiddish Videos</h2>
+      <p id="videosText">Here you will find videos that help you learn Yiddish step by step.</p>
+    </section>
+
+    <section id="projects">
+      <h2 id="projectsTitle">Our Projects</h2>
+      <p id="projectsText">We work on educational and cultural projects related to Yiddish.</p>
+    </section>
+
+    <section id="contact">
+      <h2 id="contactTitle">Contact Me</h2>
+      <form onsubmit="sendMessage(event)">
+        <input type="text" placeholder="Name" required />
+        <input type="email" placeholder="Email" required />
+        <textarea placeholder="Message" required></textarea>
+        <button class="submit" type="submit" id="sendBtn">Send</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <span id="footer">© 2025 My Website</span>
+  </footer>
+
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
+      const target = document.getElementById(id);
+      if (target) target.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleTheme() { document.body.classList.toggle('dark'); }
+    function sendMessage(e) { e.preventDefault(); alert('Message sent! (demo only)'); e.target.reset(); }
+
+    const texts = {
+      en: {
+        title: 'the Katshke movement', navAbout: 'About', navVideos: 'Videos', navProjects: 'Projects', navContact: 'Contact',
+        aboutUsTitle: 'About Us', aboutUsText: 'We are dedicated to preserving and teaching the Yiddish language and culture.',
+        movementTitle: 'Our Movement', movementText: `<p>We fight for Yiddish—not as a memory, not as a relic, not as a museum exhibit.</p>
+<p>We fight for Yiddish to live, breathe, and grow. We fight for it to be spoken loudly, freely, and proudly in streets, classrooms, cafés, online spaces, and homes. We fight so it belongs to the young, the curious, and the bold—the ones shaping the future of culture, identity, and thought.</p>
+<p>Yiddish was silenced, pushed aside, and forgotten by many. But languages do not die—they are killed when people stop speaking them. We refuse to let that happen.</p>
+<p>The Yiddishist movement is not nostalgic. It is a movement of action. We do not preserve—we create. We do not observe—we speak. We do not whisper—we shout.</p>
+<p><strong>Our intentions are clear:</strong></p>
+<ul>
+<li>To spread Yiddish everywhere it has been lost.</li>
+<li>To teach Yiddish to new generations who will carry it forward.</li>
+<li>To fight for Yiddish as a living language that belongs to everyone.</li>
+<li>To reclaim our voice, humor, culture, and identity through language.</li>
+</ul>
+<p>We are the Katshke movement. We refuse silence. We refuse to let a language die. We believe youth can reclaim the voice of generations and make it their own.</p>
+<p><strong>Speak Yiddish. Learn Yiddish. Spread Yiddish. Live Yiddish.</strong></p>`,
+      },
+      ru: {
+        title: 'движение Качке', navAbout: 'О нас', navVideos: 'Видео', navProjects: 'Проекты', navContact: 'Контакты',
+        aboutUsTitle: 'О нас', aboutUsText: 'Мы посвятили себя сохранению и обучению идишу и его культуре.',
+        movementTitle: 'Наше движение', movementText: `<p>Мы боремся за идиш — не как память, не как реликвию, не как музейный экспонат.</p>
+<p>Мы боремся, чтобы идиш жил, дышал и развивался. Мы боремся, чтобы его говорили громко, свободно и с гордостью на улицах, в классах, кафе, онлайн и в домах. Мы боремся, чтобы он принадлежал молодым, любознательным и смелым — тем, кто формирует будущее культуры, идентичности и мышления.</p>
+<p>Идиш был заглушен, отодвинут в сторону и забыт многими. Но языки не умирают — их убивают, когда люди перестают говорить на них. Мы отказываемся позволить этому случиться.</p>
+<p>Движение идишистов не ностальгическое. Это движение действия. Мы не сохраняем — мы создаём. Мы не наблюдаем — мы говорим. Мы не шепчем — мы кричим.</p>
+<p><strong>Наши цели ясны:</strong></p>
+<ul>
+<li>Распространять идиш везде, где он был утрачен.</li>
+<li>Обучать идишу новые поколения, которые будут его нести дальше.</li>
+<li>Бороться за идиш как живой язык, который принадлежит всем.</li>
+<li>Восстанавливать наш голос, юмор, культуру и идентичность через язык.</li>
+</ul>
+<p>Мы движение Katshke. Мы отказываемся от молчания. Мы не позволим языку умереть. Мы верим, что молодежь может вернуть голос поколений и сделать его своим.</p>
+<p><strong>Говорите на идише. Учите идиш. Распространяйте идиш. Живите идишем.</strong></p>`
+      },
+      he: {
+        title: 'האתר האישי שלי', navAbout: 'אודות', navVideos: 'סרטונים', navProjects: 'פרויקטים', navContact: 'צור קשר',
+        aboutUsTitle: 'אודות', aboutUsText: 'אנו מחויבים לשימור וללימוד השפה והתרבות היידישית.',
+        movementTitle: 'התנועה שלנו', movementText: `<p>אנחנו נלחמים עבור יידיש – לא כזיכרון, לא כמיצג במוזיאון.</p>
+<p>אנו נלחמים כדי שהיידיש תחיה, תנשום ותגדל. אנו נלחמים כדי שיידיש תדבר בקול רם, בחופשיות ובגאווה ברחובות, בכיתות, בבתי קפה,  ובבתים. אנו נלחמים כדי שהיא תהיה שייכת לצעירים, לסקרנים ולאמיצים – אלו שיעצבו את עתיד התרבות, הזהות והמחשבה.</p>
+<p>היידיש הושתקה, הוזזה הצידה ונשכחה על ידי רבים. אבל שפות אינן מתות – הן נהרגות כאשר אנשים מפסיקים לדבר בהן. אנו מסרבים לתת לזה לקרות.</p>
+<p>התנועה היידישיסטית אינה נוסטלגית. זו תנועה של פעולה. אנו לא משמרים – אנו יוצרים. אנו לא מתבוננים – אנו מדברים. אנו לא לוחשים – אנו צועקים.</p>
+<p><strong>מטרותינו ברורות:</strong></p>
+<ul>
+<li>להפיץ את היידיש בכל מקום שבו היא אבדה.</li>
+<li>ללמד יידיש לדורות החדשים שיחזיקו בה לעתיד.</li>
+<li>להילחם עבור יידיש כשפה חיה השייכת לכולם.</li>
+<li>להשיב את הקול שלנו, ההומור, התרבות והזהות דרך השפה.</li>
+</ul>
+<p>אנחנו תנועת הקאַטשקע. אנו מסרבים לתת לשתיקה לנצח אנו מאמינים שהצעירים יכולים לשוב ולתבוע את קול הדורות ולהפוך אותו לשלהם.</p>
+<p><strong>דברו יידיש. למדו יידיש. הפיצו יידיש. חיו יידיש.</strong></p>`
+      },
+      yi: {
+        title: 'די קאַטשקע באַוועגונג', navAbout: 'וועגן אונדז', navVideos: 'פֿילמעלעך', navProjects: 'פּרויעקטן', navContact: 'קאָנטאַקטירן',
+        aboutUsTitle: 'וועגן אונדז', aboutUsText: 'מיר מסורים צו דערהאַלטן און לערנען די ייִדישע שפּראַך און קולטור.',
+        movementTitle: 'אונדזער באַוועגונג', movementText: `<p>אונדזער באַוועגונג</p>
+<p>מיר קעמפֿן פֿאַר ייִדיש — נישט ווי אַ זכרון, נישט ווי אַ מוזיי אויסשטעלונג.</p>
+<p>מיר קעמפֿן אַז ייִדיש זאָל לעבן, אָטעמען און אויסוואַקסן. מיר קעמפֿן אַז עס זאָל זייַן גערעדט רוישיקער, פרייַער אויף גאַסן, אין קלאַסן, רעסטאָראַנען, אָנליין און הייזער. מיר קעמפֿן אַז עס זאָל געהערן צו יונגע, און ניַיגעריקע — די וואָס וועלן שאַפֿן דעם צוקונפֿט פון קולטור, אידענטיטעט און השקפֿה.</p>
+<p>יידיש איז אַנטשוויגן געוואָרן, אַוועקגעשטופּט. אָבער שפּראַכן שטאַרבן נישט אָפּ — זיי גיין אויס ווען מענטשן אַנטזאָגן צו רעדן זיי. מיר אַנטזאָגן עס צו געשען.</p>
+<p>די ייִדישיסטישע באַוועגונג איז נישט עפּעס נוסטאַלגיש. זי איז אַ באַוועגונג פון טואונגען. מיר פרעזערווירן נישט — מיר שאַפֿן. מיר קוקן נישט פֿון די זיַיטן — מיר רעדן.</p>
+<p><strong>אונדזער צילן זענען קלאָר:</strong></p>
+<ul>
+<li>צו פֿאַרשפּרייטן ייִדיש אין יעדן אָרט וואו זי איז פֿאַרשוואונדן געוואָרן.</li>
+<li>לערנען ייִדיש צום נייַעם דור וואָס וועל רעדן עס.</li>
+<li>קעמפֿן פֿאַר ייִדיש ווי אַ לעבעדיקע שפּראַך וואָס געהערט זיך צו אַלע.</li>
+<li>לאָזן אונדזערן קול ווערן געהערט, אונדזער הומאָר, קולטור און אידענטיטעט דורך דער שפּראַך.</li>
+</ul>
+<p>מיר זענען די קאַטשקע באַוועגונג. מיר לאָזן נישט די שפּראַך שוויַיגן. מיר גלויבן, אַז יוגנט קען צוריקקריגן דעם קול פון דורות און מאַכן עס זייערע אייגענעמס.</p>
+<p><strong>רעדט ייִדיש. לערנט זיך ייִדיש. שפּרייט אויס ייִדיש. לעבט ייִדיש.</strong></p>`
+      }
+    };
+
+    const langSwitcher = document.getElementById('languageSwitcher');
+    langSwitcher.addEventListener('change', e => {
+      const lang = e.target.value;
+      const t = texts[lang];
+      if (!t) return;
+      document.getElementById('title').textContent = t.title;
+      document.getElementById('navAbout').textContent = t.navAbout;
+      document.getElementById('navVideos').textContent = t.navVideos;
+      document.getElementById('navProjects').textContent = t.navProjects;
+      document.getElementById('navContact').textContent = t.navContact;
+      document.getElementById('aboutUsTitle').textContent = t.aboutUsTitle;
+      document.getElementById('aboutUsText').textContent = t.aboutUsText;
+      document.getElementById('movementTitle').textContent = t.movementTitle;
+      document.getElementById('movementText').innerHTML = t.movementText;
+      document.getElementById('videosTitle').textContent = t.videosTitle;
+      document.getElementById('videosText').textContent = t.videosText;
+      document.getElementById('projectsTitle').textContent = t.projectsTitle;
+      document.getElementById('projectsText').textContent = t.projectsText;
+      document.getElementById('contactTitle').textContent = t.contactTitle;
+      document.getElementById('footer').textContent = t.footer;
+    });
+  </script>
+</body>
+</html>
